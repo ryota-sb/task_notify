@@ -2,10 +2,11 @@ import Vue      from 'vue';
 import App      from '../app.vue'
 import Vuetify  from 'vuetify'
 import router   from './router.js'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Vuetify)
-const vuetify = new Vuetify();
+const vuetify = new Vuetify({ icons: { iconfont: 'md' } });
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({

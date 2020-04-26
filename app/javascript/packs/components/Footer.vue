@@ -1,5 +1,9 @@
 <template>
-  <div>
-    <v-footer app dark color="primary">Ryota</v-footer>
-  </div>
+  <v-footer  dark padless>
+    <v-card class="flex" flat tile>
+      <v-card-text class="py-2 white--text text-center primary">
+        {{ new Date().getFullYear() }} Ryota
+      </v-card-text>
+    </v-card>
+  </v-footer>
 </template>

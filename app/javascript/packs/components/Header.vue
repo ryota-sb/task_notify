@@ -22,7 +22,7 @@
 export default {
   data() {
     return {
-      drawer: 1,
+      drawer: false,
       nav_lists: [
         { name: 'Top',    link: '/' },
         { name: 'About',  link: '/about' },

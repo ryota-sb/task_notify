@@ -10,10 +10,13 @@ gem 'sass-rails', '>= 6'
 gem 'webpacker', '~> 4.0'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
-
+gem 'active_model_serializers'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'faker'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
