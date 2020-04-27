@@ -23,5 +23,6 @@ module TaskNotify
     end
     config.api_only = true
     config.middleware.use ActionDispatch::Flash
+    config.assets.initialize_on_precompile = false
   end
 end

@@ -12,6 +12,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
 gem 'active_model_serializers'
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'line-bot-api'
 
 group :development, :test do
   gem 'rspec-rails'

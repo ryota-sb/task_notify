@@ -11,6 +11,9 @@
           <v-toolbar-title>Notify</v-toolbar-title>
         </v-toolbar>
         <v-card-content>必要タスクを通知。やるきっかけを。</v-card-content>
+        <v-btn text>
+          <router-link to="/task">Task Create</router-link>
+        </v-btn>
       </v-card>
     </v-row>
   </v-container>
