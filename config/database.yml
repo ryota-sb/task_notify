@@ -17,5 +17,3 @@ test:
 production:
   <<: *default
   database: task_notify_production
-  username: task_notify
-  password: <%= ENV['TASK_NOTIFY_DATABASE_PASSWORD'] %>
