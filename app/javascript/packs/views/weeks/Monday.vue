@@ -69,19 +69,21 @@
           </v-card>
         </v-col>
       </v-row>
-
-      <!-- 各曜日のタスク -->
-      <router-view></router-view>
       
+      <!-- タスク追加フォーム -->
+      <v-row>
+        <v-col>
       <AddTask @add="createTask" />
+        </v-col>
+      </v-row>
 
     </v-container>
   </div>
 </template>
 
 <script>
-import axios   from 'axios' 
-import AddTask from '../components/AddTask.vue'
+import axios   from 'axios'
+import AddTask from '../../components/AddTask.vue'
 
 export default {
   data() {
@@ -112,8 +114,8 @@ export default {
         this.success_state = false;
         this.error_state = true;
         return 
-      }
-      axios.post('/api/v1/tasks', { task: { content: newTask } }).then((response) => {
+      } 
+      axios.post('/api/v1/tasks', { task: { content: newTask, week: "monday" } }).then((response) => {
           this.tasks.unshift(response.data);
           this.error_state = false;
           this.success_state = true;
@@ -123,7 +125,7 @@ export default {
     },
     updateTask(task_id) {
       axios.put('/api/v1/tasks/' + task_id).then((response) => {
-        this.$router.go({ path: '/task', force: true })
+        this.$router.go({ path: '/monday', force: true })
       }).catch(() =>{
         alert('ERROR');
       })
@@ -136,10 +138,10 @@ export default {
       })
     },
     filterStartTasks() {
-      return this.tasks.filter(task => !task.is_done)
+      return this.tasks.filter(task => !task.is_done && task.week == "monday")
     },
     filterFinishTasks() {
-      return this.tasks.filter(task => task.is_done)
+      return this.tasks.filter(task => task.is_done && task.week == "monday")
     }
   }
 }

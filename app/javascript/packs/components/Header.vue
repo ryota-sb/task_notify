@@ -11,7 +11,7 @@
         </v-list>
       </v-container>
     </v-navigation-drawer>
-    <v-app-bar app dark clipped-left color="primary">
+    <v-app-bar app dark clipped-left color="#92C440">
       <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Notify</v-toolbar-title>
     </v-app-bar>
@@ -24,9 +24,10 @@ export default {
     return {
       drawer: false,
       nav_lists: [
-        { name: 'Top',    link: '/' },
-        { name: 'About',  link: '/about' },
-        { name: 'Task',   link: '/task' },
+        { name: 'トップ',           link: '/' },
+        { name: 'アプリについて',   link: '/about' },
+        { name: '週間のタスク',     link: '/weektask' },
+        { name: '今日のタスク',     link: '/task' }
       ]
     }
   }
