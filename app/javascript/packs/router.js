@@ -15,6 +15,7 @@ import Sunday     from './views/weeks/Sunday.vue'
 
 Vue.use(VueRouter)
 export default new VueRouter({
+  mode: 'history',
   routes: [
     { path: '/',          component: Top },
     { path: '/about',     component: About },
