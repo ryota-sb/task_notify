@@ -22,7 +22,6 @@
                 >
                   <v-toolbar-title>{{ week.name }}</v-toolbar-title>
                 </v-toolbar>
-                <v-card-text>3件</v-card-text>
               </v-card>
             </v-hover>
           </v-list>
@@ -33,7 +32,10 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
+  name: 'WeekTask',
   data() {
     return {
       dayOfWeeks: [

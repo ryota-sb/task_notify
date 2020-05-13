@@ -1,14 +1,6 @@
 <template>
   <div>
     <v-container>
-      <!-- 入力によるアラート -->
-      <v-alert v-model="success_state" outlined type="success">
-        タスク追加しました
-      </v-alert>
-      <v-alert v-model="error_state" outlined type="error">
-        1～40文字以内で入力してください
-      </v-alert>
-      
       <!-- タスク表示 -->
       <v-row>
         <v-col>
@@ -19,10 +11,10 @@
               dense
               flat
             >
-              <v-toolbar-title>タスク</v-toolbar-title>
+              <v-toolbar-title>今日のタスク</v-toolbar-title>
             </v-toolbar>
             <v-list
-              v-for="(task, index) in filterStartTasks()"
+              v-for="(task, index) in doneTasks()"
               :key="task.id"
             >
               <v-list-item>
@@ -52,7 +44,7 @@
               <v-toolbar-title>完了</v-toolbar-title>
             </v-toolbar>
             <v-list
-              v-for="(task, index) in filterFinishTasks()"
+              v-for="(task, index) in notDoneTasks()"
               :key="task.id"
             >
               <v-list-item>
@@ -69,77 +61,35 @@
           </v-card>
         </v-col>
       </v-row>
-
-      <!-- 各曜日のタスク -->
-      <router-view></router-view>
-      
-      <AddTask @add="createTask" />
-
     </v-container>
   </div>
 </template>
 
 <script>
-import axios   from 'axios' 
-import AddTask from '../components/AddTask.vue'
-
 export default {
-  data() {
-    return {
-      tasks: [],
-      error_state: false,
-      success_state: false
+  name: 'Task',
+  computed: {
+    tasks() {
+      return this.$store.state.tasks
     }
   },
-  components: {
-    AddTask
-  }, 
   mounted() {
-    this.fetchTasks()
-    this.filterStartTasks()
-    this.filterFinishTasks()
+    this.$store.dispatch('getTasksAction')
+    this.doneTasks()
+    this.notDoneTasks()
   },
   methods: {
-    fetchTasks() {
-      axios.get('/api/v1/tasks').then((response) => {
-        this.tasks = response.data;
-      }).catch(() => {
-        alert('ERROR');
-      })
+    doneTasks() {
+      const date = new Date()
+      const week = date.getDay()
+      const weeks = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+      return this.tasks.filter(task => !task.is_done && task.week == weeks[week])
     },
-    createTask(newTask) {
-      if (newTask == '' || newTask.length > 40) {
-        this.success_state = false;
-        this.error_state = true;
-        return 
-      }
-      axios.post('/api/v1/tasks', { task: { content: newTask } }).then((response) => {
-          this.tasks.unshift(response.data);
-          this.error_state = false;
-          this.success_state = true;
-      }).catch(() => {
-        alert('ERROR');
-      })
-    },
-    updateTask(task_id) {
-      axios.put('/api/v1/tasks/' + task_id).then((response) => {
-        this.$router.go({ path: '/task', force: true })
-      }).catch(() =>{
-        alert('ERROR');
-      })
-    },
-    deleteTask(task_id, index) {
-      axios.delete('/api/v1/tasks/' + task_id).then((response) => {
-        this.tasks.splice(index, 1);
-      }).catch(() => {
-        alert('ERROR');
-      })
-    },
-    filterStartTasks() {
-      return this.tasks.filter(task => !task.is_done)
-    },
-    filterFinishTasks() {
-      return this.tasks.filter(task => task.is_done)
+    notDoneTasks() {
+      const date = new Date()
+      const week = date.getDay()
+      const weeks = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+      return this.tasks.filter(task => task.is_done && task.week == weeks[week])
     }
   }
 }

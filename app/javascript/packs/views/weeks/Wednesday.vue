@@ -1,14 +1,6 @@
 <template>
   <div>
     <v-container>
-      <!-- 入力によるアラート -->
-      <v-alert v-model="success_state" outlined type="success">
-        タスク追加しました
-      </v-alert>
-      <v-alert v-model="error_state" outlined type="error">
-        1～40文字以内で入力してください
-      </v-alert>
-      
       <!-- タスク表示 -->
       <v-row>
         <v-col>
@@ -19,10 +11,10 @@
               dense
               flat
             >
-              <v-toolbar-title>タスク</v-toolbar-title>
+              <v-toolbar-title>水曜日のタスク</v-toolbar-title>
             </v-toolbar>
             <v-list
-              v-for="(task, index) in filterStartTasks()"
+              v-for="(task, index) in doneTasks()"
               :key="task.id"
             >
               <v-list-item>
@@ -52,7 +44,7 @@
               <v-toolbar-title>完了</v-toolbar-title>
             </v-toolbar>
             <v-list
-              v-for="(task, index) in filterFinishTasks()"
+              v-for="(task, index) in notDoneTasks()"
               :key="task.id"
             >
               <v-list-item>
@@ -69,75 +61,49 @@
           </v-card>
         </v-col>
       </v-row>
-
-     <!-- タスク追加フォーム -->
-      <AddTask @add="createTask" />
+      
+      <!-- タスク追加フォーム -->
+      <v-row>
+        <v-col>
+          <AddTask @add="createTask" />
+        </v-col>
+      </v-row>
 
     </v-container>
   </div>
 </template>
 
 <script>
-import axios   from 'axios' 
+import axios from 'axios'
 import AddTask from '../../components/AddTask.vue'
+import { mapGetters } from 'vuex'
 
 export default {
-  data() {
-    return {
-      tasks: [],
-      error_state: false,
-      success_state: false
-    }
-  },
-  components: {
-    AddTask
-  }, 
+  name: 'Wednesday',
+  components: { AddTask }, 
   mounted() {
-    this.fetchTasks()
-    this.filterStartTasks()
-    this.filterFinishTasks()
+    this.$store.dispatch('getTasksAction')
+    this.doneTasks()
+    this.notDoneTasks()
   },
   methods: {
-    fetchTasks() {
-      axios.get('/api/v1/tasks').then((response) => {
-        this.tasks = response.data;
-      }).catch(() => {
-        alert('ERROR');
-      })
-    },
     createTask(newTask) {
-      if (newTask == '' || newTask.length > 40) {
-        this.success_state = false;
-        this.error_state = true;
-        return 
-      }
-      axios.post('/api/v1/tasks', { task: { content: newTask, week: "wednesday" } }).then((response) => {
-          this.tasks.unshift(response.data);
-          this.error_state = false;
-          this.success_state = true;
-      }).catch(() => {
-        alert('ERROR');
-      })
+      this.$store.dispatch('createTaskAction', { newTask: newTask, week: 'wednesday' })
     },
     updateTask(task_id) {
-      axios.put('/api/v1/tasks/' + task_id).then((response) => {
-        this.$router.go({ path: '/wednesday', force: true })
-      }).catch(() =>{
-        alert('ERROR');
-      })
+      this.$store.dispatch('updateTaskAction', { task_id })
+      this.$router.go({ path: this.$router.currentRoute.path, force: true })
     },
     deleteTask(task_id, index) {
-      axios.delete('/api/v1/tasks/' + task_id).then((response) => {
-        this.tasks.splice(index, 1);
-      }).catch(() => {
-        alert('ERROR');
-      })
+      this.$store.dispatch('deleteTaskAction', { task_id, index })
     },
-    filterStartTasks() {
-      return this.tasks.filter(task => !task.is_done && task.week == "wednesday")
+    doneTasks() {
+      let task = this.$store.state.tasks
+      return task.filter(task => !task.is_done && task.week == "wednesday")
     },
-    filterFinishTasks() {
-      return this.tasks.filter(task => task.is_done && task.week == "wednesday")
+    notDoneTasks() {
+      let task = this.$store.state.tasks
+      return task.filter(task => task.is_done && task.week == "wednesday")
     }
   }
 }

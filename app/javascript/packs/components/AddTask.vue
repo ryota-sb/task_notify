@@ -19,13 +19,16 @@
           <v-container>
             <v-row>
               <v-col>
-                <v-text-field
-                  v-model="newTask"
-                  label="タスクを入力して下さい"
-                  color="light-green lighten-1"
-                  counter="40"
-                >
-                </v-text-field>
+                <v-form ref="valid_form">
+                  <v-text-field
+                    v-model="newTask"
+                    label="タスクを入力して下さい"
+                    color="light-green lighten-1"
+                    :rules="[required, limit_length]"
+                    counter="40"
+                  >
+                  </v-text-field>
+                </v-form>
               </v-col>
             </v-row>
           </v-container>
@@ -33,7 +36,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog = false">閉じる</v-btn>
-          <v-btn color="blue darken-1" text @click="AddTask">追加</v-btn>
+          <v-btn color="blue darken-1" text @click="addTask()">追加</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -45,14 +48,18 @@ export default {
   data() {
     return {
       dialog: false,
-      newTask: ''
+      newTask: '',
+      required: value => !!value || '入力してください',
+      limit_length: value => value.length <= 40 || '40文字以内で入力してください'
     }
   },
   methods: {
-    AddTask() {
-      this.dialog = false;
-      this.$emit('add', this.newTask)
-      this.newTask = '';
+    addTask() {
+      if (this.$refs.valid_form.validate()) { 
+        this.$emit('add', this.newTask)
+        this.newTask = ''
+        this.dialog = false
+      }
     }
   }
 }
