@@ -4,7 +4,6 @@ class LinebotController < ApplicationController
   protect_from_forgery :except => [:callback]
 
   def callback
-    @tasks = Task.all
     body = request.body.read
 
     signature = request.env['HTTP_X_LINE_SIGNATURE']
@@ -15,19 +14,13 @@ class LinebotController < ApplicationController
     events = client.parse_events_from(body)
 
     events.each do |event|
-      @tasks.each do |task|
-        if event.message['text'].include?('月曜日')
-          response = task.content
-        end 
-      end
-
       case event
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
           message = {
             type: 'text',
-            text: response
+            text: event.message['text']
           }
           client.reply_message(event['replyToken'], message)
         end
