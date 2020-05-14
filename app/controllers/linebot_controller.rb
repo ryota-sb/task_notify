@@ -16,9 +16,11 @@ class LinebotController < ApplicationController
 
     events.each do |event|
       if event.message['text'].include?('月曜日')
-        response = @tasks.content
+        @tasks.each do |task|
+          response = task.content
+        end 
       end
-      
+
       case event
       when Line::Bot::Event::Message
         case event.type
