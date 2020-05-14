@@ -15,8 +15,8 @@ class LinebotController < ApplicationController
     events = client.parse_events_from(body)
 
     events.each do |event|
-      if event.message['text'].include?('月曜日')
-        @tasks.each do |task|
+      @tasks.each do |task|
+        if event.message['text'].include?('月曜日')
           response = task.content
         end 
       end
