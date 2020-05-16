@@ -1,5 +1,24 @@
 <template>
-  <div>
-    <h1>About</h1>
-  </div>
+  <v-container>
+    <v-row>
+      <v-col>
+        <v-card>
+          <v-toolbar
+          dark
+          flat
+          dense
+          color="primary"
+          >
+            <v-toolbar-title>Task Notifyについて</v-toolbar-title>
+          </v-toolbar>
+          <v-card-content>
+            <v-card-text>追加したタスクを曜日ごとにLineで通知してくれます。</v-card-text>
+            <v-card-text>Lineの友達追加が必要です。</v-card-text>
+            <v-card-text>各曜日に追加できるタスクは、最大5個です。</v-card-text>
+            <v-card-text>もっとも継続していきたいタスクを追加しよう！</v-card-text>
+          </v-card-content>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
