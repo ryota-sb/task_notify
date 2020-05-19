@@ -1,4 +1,5 @@
 <template>
+  <div>
   <v-app>
     <Header />
     <v-content>
@@ -6,6 +7,7 @@
     </v-content>
     <Footer />
   </v-app>
+  </div>
 </template>
 
 <script>
