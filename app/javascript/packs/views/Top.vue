@@ -10,7 +10,7 @@
         >
           <v-toolbar-title>Notify</v-toolbar-title>
         </v-toolbar>
-        <v-card-content>必要タスクを通知。やることのきっかけ作りを。</v-card-content>
+        <v-card-text>必要タスクを通知。やることのきっかけ作りを。</v-card-text>
         <v-btn text>
           <router-link to="/task">Task Create</router-link>
         </v-btn>

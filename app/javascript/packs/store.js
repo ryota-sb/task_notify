@@ -30,9 +30,9 @@ export default new Vuex.Store({
         console.log(error)
       })
     },
-    createTaskAction({ commit }, { newTask, week }) {
+    createTaskAction({ commit }, { newTask, week, time }) {
       if (newTask == '' || newTask.length > 40) { return }
-      axios.post('/api/v1/tasks', { task: { content: newTask, week: week } }).then(response => {
+      axios.post('/api/v1/tasks', { task: { content: newTask, week: week, notification_time: time } }).then(response => {
         commit('createTask', response.data)
       }).catch(error => {
         console.log(error)

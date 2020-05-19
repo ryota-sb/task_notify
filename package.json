@@ -8,6 +8,7 @@
     "@rails/webpacker": "4.2.2",
     "axios": "^0.19.2",
     "material-design-icons-iconfont": "^5.0.1",
+    "moment": "^2.25.3",
     "turbolinks": "^5.2.0",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",

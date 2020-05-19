@@ -19,6 +19,6 @@ class Api::V1::TasksController < ApplicationController
 
   private
     def task_params
-      params.require(:task).permit(:content, :is_done, :week)
+      params.require(:task).permit(:content, :is_done, :week, :notification_time)
     end
 end

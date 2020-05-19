@@ -18,14 +18,18 @@
               :key="task.id"
             >
               <v-list-item>
-                <v-list-item-action>
-                  <v-btn text icon @click="updateTask(task.id, index)">
-                    <v-icon color="green">check_circle_outline</v-icon>
-                  </v-btn>
-                </v-list-item-action>
-                <v-list-item-content>
-                  <v-list-item-title>{{ task.content }}</v-list-item-title>
-                </v-list-item-content>
+                <v-row no-gutters>
+                  <v-col>
+                    <v-card>
+                      <v-card-text>
+                        <v-btn text icon @click="updateTaskAction(task.id, index)">
+                          <v-icon color="green">check_circle_outline</v-icon>
+                        </v-btn>
+                        {{ task.content }} / {{ task.notification_time | moment }}開始
+                      </v-card-text>
+                    </v-card>
+                  </v-col>
+                </v-row>
               </v-list-item>
             </v-list>
           </v-card>
@@ -48,14 +52,18 @@
               :key="task.id"
             >
               <v-list-item>
-                <v-list-item-action>
-                  <v-btn text icon color="red lighten-2" @click="deleteTask(task.id, index)">
-                    <v-icon color="red">remove_circle_outline</v-icon>
-                  </v-btn>
-                </v-list-item-action>
-                <v-list-item-content>
-                  <v-list-item-title>{{ task.content }}</v-list-item-title>
-                </v-list-item-content>
+                <v-row no-gutters>
+                  <v-col>
+                    <v-card>
+                      <v-card-text>
+                        <v-btn text icon color="red lighten-2" @click="deleteTaskAction(task.id, index)">
+                          <v-icon color="red">remove_circle_outline</v-icon>
+                        </v-btn>
+                        {{ task.content }}
+                      </v-card-text>
+                    </v-card>
+                  </v-col>
+                </v-row>
               </v-list-item>
             </v-list>
           </v-card>
@@ -66,6 +74,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   name: 'Task',
   computed: {
@@ -79,6 +89,13 @@ export default {
     this.notDoneTasks()
   },
   methods: {
+    updateTaskAction(task_id) {
+      this.$store.dispatch('updateTaskAction', { task_id })
+      this.$router.go({ path: this.$router.currentRoute.path, force: true })
+    },
+    deleteTaskAction(task_id, index) {
+      this.$store.dispatch('deleteTaskAction', { task_id, index })
+    },
     doneTasks() {
       const date = new Date()
       const week = date.getDay()
@@ -90,6 +107,11 @@ export default {
       const week = date.getDay()
       const weeks = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
       return this.tasks.filter(task => task.is_done && task.week == weeks[week])
+    }
+  },
+  filters: {
+    moment(date) {
+      return moment(date).format('HH:mm')
     }
   }
 }

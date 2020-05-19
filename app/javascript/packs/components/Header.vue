@@ -24,10 +24,10 @@ export default {
     return {
       drawer: false,
       nav_lists: [
-        { name: 'トップ',           link: '/' },
-        { name: 'アプリについて',   link: '/about' },
-        { name: '週間のタスク',     link: '/weektask' },
-        { name: '今日のタスク',     link: '/task' }
+        { name: 'トップ',             link: '/' },
+        { name: 'アプリについて',     link: '/about' },
+        { name: '週間のタスクセット', link: '/weektask' },
+        { name: '今日のタスク',       link: '/task' }
       ]
     }
   }

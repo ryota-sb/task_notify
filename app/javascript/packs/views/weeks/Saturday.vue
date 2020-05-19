@@ -18,14 +18,18 @@
               :key="task.id"
             >
               <v-list-item>
-                <v-list-item-action>
-                  <v-btn text icon @click="updateTask(task.id, index)">
-                    <v-icon color="green">check_circle_outline</v-icon>
-                  </v-btn>
-                </v-list-item-action>
-                <v-list-item-content>
-                  <v-list-item-title>{{ task.content }}</v-list-item-title>
-                </v-list-item-content>
+                <v-row no-gutters>
+                  <v-col>
+                    <v-card>
+                      <v-card-text>
+                        <v-btn text icon @click="updateTask(task.id, index)">
+                          <v-icon color="green">check_circle_outline</v-icon>
+                        </v-btn>
+                        {{ task.content }} / {{ task.notification_time | moment }}開始
+                      </v-card-text>
+                    </v-card>
+                  </v-col>
+                </v-row>
               </v-list-item>
             </v-list>
           </v-card>
@@ -63,20 +67,15 @@
       </v-row>
       
       <!-- タスク追加フォーム -->
-      <v-row>
-        <v-col>
-          <AddTask @add="createTask" />
-        </v-col>
-      </v-row>
+      <AddTask @add="createTask" />
 
     </v-container>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 import AddTask from '../../components/AddTask.vue'
-import { mapGetters } from 'vuex'
+import moment from 'moment'
 
 export default {
   name: 'Saturday',
@@ -87,8 +86,8 @@ export default {
     this.notDoneTasks()
   },
   methods: {
-    createTask(newTask) {
-      this.$store.dispatch('createTaskAction', { newTask: newTask, week: 'saturday' })
+    createTask(newTask, time) {
+      this.$store.dispatch('createTaskAction', { newTask: newTask, week: 'saturday', time: time })
     },
     updateTask(task_id) {
       this.$store.dispatch('updateTaskAction', { task_id })
@@ -104,6 +103,11 @@ export default {
     notDoneTasks() {
       let task = this.$store.state.tasks
       return task.filter(task => task.is_done && task.week == "saturday")
+    }
+  },
+  filters: {
+    moment(date) {
+      return moment(date).format('HH:mm')
     }
   }
 }

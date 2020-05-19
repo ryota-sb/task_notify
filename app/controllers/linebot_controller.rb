@@ -1,12 +1,21 @@
 class LinebotController < ApplicationController
   require 'line/bot'
+  require 'date'
 
   protect_from_forgery :except => [:callback]
 
-  def week_tasks(week)
-    @tasks = Task.select(:content).where(is_done: false, week: week)
-    task_lists = @tasks.map { |task| task.content }
+  # 渡されたweekのタスクをリストに格納
+  def week_tasks(week) 
+    tasks = Task.select(:content, :notification_time).order(:notification_time).where(is_done: false, week: week)
+    task_lists = tasks.map { |task| "スタート#{task.notification_time.strftime('%H:%M')} / #{task.content}" }
     return task_lists
+  end
+
+  # 完了タスクを未完了にする(リセット)
+  def reset_tasks(week)
+    tasks = Task.where(is_done: true, week: week)
+    tasks.update_all(is_done: false)
+    return '今日のタスクをリセットしました。明日も頑張りましょう！'
   end
 
   def callback
@@ -22,29 +31,21 @@ class LinebotController < ApplicationController
 
     events.each do |event|
       reply_text_lists = []
-      if event.message['text'].include?('月曜日')
-        reply_text_lists.concat(week_tasks('monday'))
-      elsif event.message['text'].include?('火曜日')
-        reply_text_lists.concat(week_tasks('tuesday'))
-      elsif event.message['text'].include?('水曜日')
-        reply_text_lists.concat(week_tasks('wednesday'))
-      elsif event.message['text'].include?('木曜日')
-        reply_text_lists.concat(week_tasks('thursday'))
-      elsif event.message['text'].include?('金曜日')
-        reply_text_lists.concat(week_tasks('friday'))
-      elsif event.message['text'].include?('土曜日')
-        reply_text_lists.concat(week_tasks('saturday'))
-      elsif event.message['text'].include?('日曜日')
-        reply_text_lists.concat(week_tasks('sunday'))
+      case event.message['text']
+      when '今日のタスク'
+        reply_text_lists.concat(week_tasks(get_day_of_the_week))
+      when 'リセット'
+        reply_text_lists.push(reset_tasks(get_day_of_the_week))
       else
         reply_text_lists.push('そのコマンドはありません')
       end
+
       case event
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
           message_array = reply_text_lists.map do |reply_text|
-            { type: 'text', text: "「#{reply_text}」の時間です！" }
+            { type: 'text', text: reply_text }
           end
           client.reply_message(event['replyToken'], message_array)
         end
@@ -59,5 +60,12 @@ class LinebotController < ApplicationController
       config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
       config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
     }
+  end
+
+  # 今日の曜日をリスト内の文字列で返す
+  def get_day_of_the_week
+    date = Date.today
+    week_lists = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+    return week_lists[date.wday]
   end
 end

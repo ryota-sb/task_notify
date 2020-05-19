@@ -24,5 +24,11 @@ module TaskNotify
     config.api_only = true
     config.middleware.use ActionDispatch::Flash
     config.assets.initialize_on_precompile = false
+    config.time_zone = 'Asia/Tokyo'
+
+    # development環境（lib/tasksのパスを通す）
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
+    # production環境（lib/tasksのパスを通す）
+    config.eager_load_paths += Dir["#{config.root}/lib/**/"]
   end
 end

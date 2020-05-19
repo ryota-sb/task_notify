@@ -14,6 +14,7 @@ gem 'active_model_serializers'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'line-bot-api'
 gem 'dotenv-rails'
+gem 'whenever', require: false
 
 group :development, :test do
   gem 'rspec-rails'
