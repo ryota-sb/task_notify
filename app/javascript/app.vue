@@ -1,13 +1,11 @@
 <template>
-  <div id="app">
-    <v-app>
-      <Header />
-      <v-content>
-        <router-view />
-      </v-content>
-      <Footer />
-    </v-app>
-  </div>
+  <v-app>
+    <Header />
+    <v-content>
+      <router-view />
+    </v-content>
+    <Footer />
+  </v-app>
 </template>
 
 <script>
@@ -21,10 +19,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
-}
-</style>
