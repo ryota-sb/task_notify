@@ -7,7 +7,8 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Vuetify)
-const vuetify = new Vuetify({ icons: { iconfont: 'md' } });
+const opts = { icons: { iconfont: 'md' } }
+const vuetify = new Vuetify(opts);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
