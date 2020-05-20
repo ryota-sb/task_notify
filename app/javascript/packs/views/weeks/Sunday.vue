@@ -4,71 +4,74 @@
       <!-- タスク表示 -->
       <v-row>
         <v-col>
-          <v-card>
+          <v-card color="#EEEEEE">
             <v-toolbar
-              color="#92C440"
+              color="#FF7854"
               dark
               dense
               flat
             >
-              <v-toolbar-title>日曜日のタスク</v-toolbar-title>
+              <v-toolbar-title>タスク(日)</v-toolbar-title>
             </v-toolbar>
-            <v-list
-              v-for="(task, index) in doneTasks()"
-              :key="task.id"
-            >
-              <v-list-item>
-                <v-row no-gutters>
-                  <v-col>
-                    <v-card>
-                      <v-card-text>
-                        <v-btn text icon @click="updateTask(task.id, index)">
-                          <v-icon color="green">check_circle_outline</v-icon>
-                        </v-btn>
-                        {{ task.content }} / {{ task.notification_time | moment }}開始
-                      </v-card-text>
-                    </v-card>
-                  </v-col>
-                </v-row>
-              </v-list-item>
-            </v-list>
+            <v-container>
+              <v-row dense>
+                <v-col
+                  v-for="(task, index) in doneTasks()"
+                  :key="task.id"
+                  :cols="12"
+                >
+                  <v-card flat>
+                    <v-card-text>
+                      <v-btn text icon @click="updateTask(task.id, index)">
+                        <v-icon color="#70C1B3">check_circle_outline</v-icon>
+                      </v-btn>
+                      {{ task.content }} / {{ task.notification_time | moment }}開始
+                    </v-card-text>
+                  </v-card>
+                </v-col>
+                <v-col>
+                  <!-- タスク追加フォーム -->
+                  <AddTask @add="createTask" />
+                </v-col>
+              </v-row>
+            </v-container>
           </v-card>
         </v-col>
-      </v-row>    
+      </v-row>
+
       <!-- 完了タスク -->
       <v-row>
         <v-col>
-          <v-card>
+          <v-card color="#EEEEEE">
             <v-toolbar
-              color="red lighten-1"
+              color="red lighten-2"
               dark
               dense
               flat
             >
               <v-toolbar-title>完了</v-toolbar-title>
             </v-toolbar>
-            <v-list
-              v-for="(task, index) in notDoneTasks()"
-              :key="task.id"
-            >
-              <v-list-item>
-                <v-list-item-action>
-                  <v-btn text icon color="red lighten-2" @click="deleteTask(task.id, index)">
-                    <v-icon color="red">remove_circle_outline</v-icon>
-                  </v-btn>
-                </v-list-item-action>
-                <v-list-item-content>
-                  <v-list-item-title>{{ task.content }}</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list>
+            <v-container>
+              <v-row dense>
+                <v-col
+                   v-for="(task, index) in notDoneTasks()"
+                  :key="task.id"
+                  :cols="12"
+                >
+                  <v-card flat>
+                    <v-card-text>
+                      <v-btn text icon color="red lighten-2" @click="deleteTask(task.id, index)">
+                        <v-icon color="red">remove_circle_outline</v-icon>
+                      </v-btn>
+                      {{ task.content }}
+                    </v-card-text>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </v-container>
           </v-card>
         </v-col>
       </v-row>
-      
-      <!-- タスク追加フォーム -->
-      <AddTask @add="createTask" />
-
     </v-container>
   </div>
 </template>

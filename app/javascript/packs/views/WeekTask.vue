@@ -38,13 +38,13 @@ export default {
   data() {
     return {
       dayOfWeeks: [
-        { name: '月曜日', label: 'monday',    color: '#E4B071', link: '/monday' },
-        { name: '火曜日', label: 'tuesday',   color: '#E4B071', link: '/tuesday' },
-        { name: '水曜日', label: 'wednesday', color: '#E4B071', link: '/wednesday' },
-        { name: '木曜日', label: 'thursday',  color: '#E4B071', link: '/thursday' },
-        { name: '金曜日', label: 'friday',    color: '#E4B071', link: '/friday' },
-        { name: '土曜日', label: 'saturday',  color: '#1982C4', link: '/saturday' },
-        { name: '日曜日', label: 'sunday',    color: '#E06060', link: '/sunday' }
+        { name: '月曜日', label: 'monday',    color: '#ECD273', link: '/monday' },
+        { name: '火曜日', label: 'tuesday',   color: '#ECD273', link: '/tuesday' },
+        { name: '水曜日', label: 'wednesday', color: '#ECD273', link: '/wednesday' },
+        { name: '木曜日', label: 'thursday',  color: '#ECD273', link: '/thursday' },
+        { name: '金曜日', label: 'friday',    color: '#ECD273', link: '/friday' },
+        { name: '土曜日', label: 'saturday',  color: '#247BA0', link: '/saturday' },
+        { name: '日曜日', label: 'sunday',    color: '#FF7854', link: '/sunday' }
       ]
     }
   }

@@ -3,7 +3,7 @@ import VueRouter  from 'vue-router'
 import Top        from './views/Top.vue'
 import About      from './views/About.vue'
 import WeekTask   from './views/WeekTask.vue'
-import Task  from './views/Task.vue'
+import TodayTask  from './views/TodayTask.vue'
 
 import Monday     from './views/weeks/Monday.vue'
 import Tuesday    from './views/weeks/Tuesday.vue'
@@ -17,10 +17,10 @@ Vue.use(VueRouter)
 export default new VueRouter({
   mode: 'history',
   routes: [
-    { path: '/',          component: Top },
-    { path: '/about',     component: About },
-    { path: '/weektask',  component: WeekTask },
-    { path: '/task',      component: Task },
+    { path: '/',           component: Top },
+    { path: '/about',      component: About },
+    { path: '/weektask',   component: WeekTask },
+    { path: '/todaytask',  component: TodayTask },
     { path: '/monday',     component: Monday },
     { path: '/tuesday',    component: Tuesday},
     { path: '/wednesday',  component: Wednesday},

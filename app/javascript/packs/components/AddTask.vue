@@ -1,23 +1,22 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" dense>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on }">
-        <v-btn 
-          fab
-          x-large
-          dark
-          color="#6A4C93"
+        <v-col :cols="12">
+        <v-btn
+          block
+          depressed
+          color="white"
+          dense
           v-on="on"
-          absolute
-          bottom
-          right
         >
-          <v-icon dark>create</v-icon>
+          <v-icon>add</v-icon>
         </v-btn>
+        </v-col>
       </template>
       <v-card>
         <v-toolbar
-          color="light-green lighten-1"
+          color="#70C1B3"
           dark
           dense
           flat
