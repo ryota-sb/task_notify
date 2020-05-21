@@ -31,22 +31,44 @@
                   <v-text-field
                     v-model="newTask"
                     label="タスクを入力して下さい"
-                    color="light-green lighten-1"
+                    color="#70C1B3"
                     :rules="[required_task, limit_length]"
                     counter="40"
                   >
                   </v-text-field>
-                  <v-row>
-                    <v-col>
-                      <v-card-title>タスクの開始時間</v-card-title>
-                      <v-time-picker
-                        v-model="time"
-                        :landscape="$vuetify.breakpoint.mdAndUp"
-                        full-width
-                        type="month"
-                      ></v-time-picker>
-                    </v-col>
-                  </v-row>
+                  <template>
+                    <v-row>
+                      <v-col>
+                        <v-dialog
+                          ref="dialog"
+                          v-model="modal2"
+                          :return-value.sync="time"
+                          persistent
+                          width="290px"
+                        >
+                          <template v-slot:activator="{ on }">
+                            <v-text-field
+                              v-model="time"
+                              label="タスクの開始時間を入力してください"
+                              color="#70C1B3"
+                              readonly
+                              v-on="on"
+                            ></v-text-field>
+                          </template>
+                          <v-time-picker
+                            v-if="modal2"
+                            v-model="time"
+                            full-width
+                            ampm-in-title
+                          >
+                            <v-spacer></v-spacer>
+                            <v-btn text color="primary" @click="modal2 = false">閉じる</v-btn>
+                            <v-btn text color="primary" @click="$refs.dialog.save(time)">追加</v-btn>
+                          </v-time-picker>
+                        </v-dialog>
+                      </v-col>
+                    </v-row>
+                  </template>
                 </v-form>
               </v-col>
             </v-row>
@@ -75,7 +97,9 @@ export default {
     return {
       dialog: false,
       disabled: true,
-      time: '',
+      time: null,
+      menu2: false,
+      modal2: false,
       newTask: '',
       required_task: value => !!value || '入力してください',
       limit_length: value => value.length <= 40 || '40文字以内で入力してください',

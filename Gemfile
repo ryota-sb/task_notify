@@ -15,6 +15,11 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'line-bot-api'
 gem 'dotenv-rails'
 gem 'whenever', require: false
+gem 'devise'
+gem 'devise_token_auth'
+gem 'rack-cors'
+gem 'omniauth-line'
+
 
 group :development, :test do
   gem 'rspec-rails'

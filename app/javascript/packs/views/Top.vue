@@ -26,6 +26,7 @@
               <v-btn
                 block
                 outlined
+                :to="btn.link"
                 :style="{ color: btn.color }"
               >
                 {{ btn.name }}
@@ -43,8 +44,8 @@ export default {
   data() {
     return {
       buttons: [
-        { name: '新規作成', link: '/', color: '#247BA0'},
-        { name: 'ログイン', link: '/', color: '#FF7854'},
+        { name: '新規作成', link: '/users/sign_in', color: '#247BA0'},
+        { name: 'ログイン', link: '/users/sign_up', color: '#FF7854'},
       ]
     }
   }
