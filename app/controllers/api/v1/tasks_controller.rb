@@ -1,4 +1,6 @@
 class Api::V1::TasksController < ApplicationController
+  before_action :authenticate_api_user!
+
   def index
     tasks = Task.all.order('created_at DESC')
     render json: tasks
@@ -19,6 +21,6 @@ class Api::V1::TasksController < ApplicationController
 
   private
     def task_params
-      params.require(:task).permit(:content, :is_done, :week, :notification_time)
+      params.require(:task).permit(:content, :is_done, :week, :notification_time, :user_id)
     end
 end

@@ -44,8 +44,8 @@ export default {
   data() {
     return {
       buttons: [
-        { name: '新規作成', link: '/users/sign_in', color: '#247BA0'},
-        { name: 'ログイン', link: '/users/sign_up', color: '#FF7854'},
+        { name: '新規作成', link: '/signup', color: '#247BA0'},
+        { name: 'ログイン', link: '/signin', color: '#FF7854'},
       ]
     }
   }

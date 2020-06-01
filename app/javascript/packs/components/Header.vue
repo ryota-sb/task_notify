@@ -19,7 +19,12 @@
       </v-container>
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block>Logout</v-btn>
+          <v-btn 
+            block
+            @click="signOut"
+          >
+            Logout
+          </v-btn>
         </div>
       </template>
     </v-navigation-drawer>
@@ -41,6 +46,14 @@ export default {
         { name: '週間のタスクセット', icon: 'assignment',      link: '/weektask' },
         { name: '今日のタスク',       icon: 'note',            link: '/todaytask' }
       ]
+    }
+  },
+  methods: {
+    signOut() {
+      const params = this.$store.state.headers
+      this.$store.dispatch('signOutAction', params)
+      console.log(this.$store.state.users)
+      console.log(params)
     }
   }
 }

@@ -18,7 +18,7 @@ gem 'whenever', require: false
 gem 'devise'
 gem 'devise_token_auth'
 gem 'rack-cors'
-gem 'omniauth-line'
+gem 'omniauth'
 
 
 group :development, :test do

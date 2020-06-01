@@ -32,7 +32,7 @@
                     v-model="newTask"
                     label="タスクを入力して下さい"
                     color="#70C1B3"
-                    :rules="[required_task, limit_length]"
+                    :rules="[required_content, limit_length]"
                     counter="40"
                   >
                   </v-text-field>
@@ -101,13 +101,13 @@ export default {
       menu2: false,
       modal2: false,
       newTask: '',
-      required_task: value => !!value || '入力してください',
+      required_content: value => !!value || '入力してください',
       limit_length: value => value.length <= 40 || '40文字以内で入力してください',
     }
   },
   methods: {
     addTask() {
-      if (this.$refs.valid_form.validate()) { 
+      if (this.$refs.valid_form.validate()) {
         this.$emit('add', this.newTask, this.time)
         this.time = ''
         this.newTask = ''

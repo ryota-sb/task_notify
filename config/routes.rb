@@ -9,11 +9,16 @@ Rails.application.routes.draw do
   get '/friday',    to: 'home#index'
   get '/saturday',  to: 'home#index'
   get '/sunday',    to: 'home#index'
-  get '/task',      to: 'home#index'
+  get '/todaytask', to: 'home#index'
+  get '/signup',    to: 'home#index'
+  get '/signin',    to: 'home#index'
 
   post '/callback', to: 'linebot#callback'
 
   namespace :api, { format: 'json' } do
+    mount_devise_token_auth_for 'User', at: 'auth', controllers: {
+      registrations: 'api/auth/registrations'
+    }
     namespace :v1 do
       resources :tasks, only: [:index, :create, :update, :destroy]
     end

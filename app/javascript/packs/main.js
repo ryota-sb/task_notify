@@ -1,13 +1,13 @@
-import Vue      from 'vue';
-import App      from '../app.vue'
-import store    from './store.js'
-import router   from './router.js'
-import Vuetify  from 'vuetify'
+import Vue       from 'vue';
+import App       from '../app.vue'
+import store     from './store.js'
+import router    from './router.js'
+import Vuetify   from 'vuetify'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import 'vuetify/dist/vuetify.min.css'
 
-Vue.use(Vuetify)
-const opts = { icons: { iconfont: 'md' } }
+Vue.use(Vuetify);
+const opts = { icons: { iconfont: 'md' } };
 const vuetify = new Vuetify(opts);
 
 document.addEventListener('DOMContentLoaded', () => {
