@@ -1,5 +1,4 @@
 class Api::V1::TasksController < ApplicationController
-  before_action :authenticate_api_user!
 
   def index
     tasks = Task.all.order('created_at DESC')
