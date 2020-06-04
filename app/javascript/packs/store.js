@@ -31,7 +31,8 @@ export default new Vuex.Store({
     signUp(state, users) {
       state.users = users
     },
-    signIn(state, headers) {
+    signIn(state, { headers, user }) {
+      state.users = user
       state.headers = {
         "uid": headers['uid'],
         "client": headers['client'],
@@ -50,9 +51,9 @@ export default new Vuex.Store({
         console.log(error);
       })
     },
-    createTaskAction({ commit }, { newTask, week, time }) {
+    createTaskAction({ commit }, { newTask, week, time, user_id }) {
       if (newTask == '' || newTask.length > 40) { return }
-      axios.post('/api/v1/tasks', { task: { content: newTask, week: week, notification_time: time } }).then(response => {
+      axios.post('/api/v1/tasks', { task: { content: newTask, week: week, notification_time: time, user_id: user_id } }).then(response => {
         commit('createTask', response.data);
       }).catch(error => {
         console.log(error);
@@ -79,14 +80,19 @@ export default new Vuex.Store({
         console.log(error);
       })
     },
-    signInAction({ commit }, params) {
+    signInAction({ commit, state }, params) {
       axios.post('/api/auth/sign_in', params).then(response => {
-        commit('signIn', response.headers);
+      const headers = response.headers
+      const user =  response.data
+      commit('signIn', { headers, user });
+        console.log(user)
+        console.log(headers)
+        console.log(state)
       }).catch(error => {
         console.log(error);
       })
     },
-    signOutAction({ commit }, params) {
+    signOutAction({ commit, state }, params) {
       axios.delete('/api/auth/sign_out', { headers: params }).then(response => {
         commit('signOut', response.headers);
       }).catch(error => {

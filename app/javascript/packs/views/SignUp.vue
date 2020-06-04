@@ -2,6 +2,17 @@
   <v-container>
     <v-row>
       <v-col>
+        <v-alert
+          border="left"
+          color="#247BA0"
+          dark
+        >
+          登録が完了しました！
+        </v-alert>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
         <v-card>
           <v-toolbar
             color="#247BA0"
@@ -96,6 +107,7 @@ export default {
         this.email = ''
         this.password = ''
         this.$router.push({ path: '/' })
+
       }
     }
   }

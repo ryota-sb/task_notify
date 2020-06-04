@@ -90,7 +90,8 @@ export default {
   },
   methods: {
     createTask(newTask, time) {
-      this.$store.dispatch('createTaskAction', { newTask: newTask, week: 'wednesday', time: time })
+      const user_id = this.$store.state.users.data.id
+      this.$store.dispatch('createTaskAction', { newTask: newTask, week: 'wednesday', time: time, user_id: user_id })
     },
     updateTask(task_id) {
       this.$store.dispatch('updateTaskAction', { task_id })
@@ -101,11 +102,13 @@ export default {
     },
     doneTasks() {
       let task = this.$store.state.tasks
-      return task.filter(task => !task.is_done && task.week == "wednesday")
+      let user_id = this.$store.state.users.data.id
+      return task.filter(task => !task.is_done && task.week == "wednesday" && task.user_id == user_id)
     },
     notDoneTasks() {
       let task = this.$store.state.tasks
-      return task.filter(task => task.is_done && task.week == "wednesday")
+      let user_id = this.$store.state.users.data.id
+      return task.filter(task => task.is_done && task.week == "wednesday" && task.user_id == user_id)
     }
   },
   filters: {

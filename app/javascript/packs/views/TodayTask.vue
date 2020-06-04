@@ -77,35 +77,34 @@ import moment from 'moment'
 
 export default {
   name: 'TodayTask',
-  computed: {
-    tasks() {
-      return this.$store.state.tasks
-    }
-  },
   mounted() {
     this.$store.dispatch('getTasksAction')
     this.doneTasks()
     this.notDoneTasks()
   },
   methods: {
-    updateTaskAction(task_id) {
+    updateTask(task_id) {
       this.$store.dispatch('updateTaskAction', { task_id })
       this.$router.go({ path: this.$router.currentRoute.path, force: true })
     },
-    deleteTaskAction(task_id, index) {
+    deleteTask(task_id, index) {
       this.$store.dispatch('deleteTaskAction', { task_id, index })
     },
     doneTasks() {
       const date = new Date()
       const week = date.getDay()
       const weeks = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-      return this.tasks.filter(task => !task.is_done && task.week == weeks[week])
+      let user_id = this.$store.state.users.data.id
+      let tasks = this.$store.state.tasks
+      return tasks.filter(task => !task.is_done && task.week == weeks[week] && task.user_id == user_id)
     },
     notDoneTasks() {
       const date = new Date()
       const week = date.getDay()
       const weeks = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-      return this.tasks.filter(task => task.is_done && task.week == weeks[week])
+      let user_id = this.$store.state.users.data.id
+      let tasks = this.$store.state.tasks
+      return tasks.filter(task => task.is_done && task.week == weeks[week] && task.user_id == user_id)
     }
   },
   filters: {
