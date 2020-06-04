@@ -92,8 +92,6 @@ export default {
       const params = this.$store.state.headers
       this.$store.dispatch('signOutAction', params)
       this.$router.push('/')
-      console.log(this.$store.state.users)
-      console.log(params)
     }
   }
 }

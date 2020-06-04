@@ -85,9 +85,6 @@ export default new Vuex.Store({
       const headers = response.headers
       const user =  response.data
       commit('signIn', { headers, user });
-        console.log(user)
-        console.log(headers)
-        console.log(state)
       }).catch(error => {
         console.log(error);
       })
