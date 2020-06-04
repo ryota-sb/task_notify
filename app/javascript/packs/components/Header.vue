@@ -82,7 +82,8 @@ export default {
     }
   },
   computed: mapState([
-    'headers'
+    'headers',
+    'users'
   ]),
   methods: {
     current_user() {
