@@ -97,6 +97,11 @@ export default new Vuex.Store({
       })
     }
   },
+  getters: {
+    users(state) {
+      return state.users
+    }
+  },
   // stateの状態をリロードしても保持する
   plugins: [createPersistedState({ storage: window.sessionStorage })]
 });

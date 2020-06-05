@@ -94,17 +94,17 @@ export default {
       const date = new Date()
       const week = date.getDay()
       const weeks = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-      let user_id = this.$store.state.users.data.id
-      let tasks = this.$store.state.tasks
-      return tasks.filter(task => !task.is_done && task.week == weeks[week] && task.user_id == user_id)
+      const user = this.$store.getters.users
+      const tasks = this.$store.state.tasks
+      return tasks.filter(task => !task.is_done && task.week == weeks[week] && task.user_id == user.data.id)
     },
     notDoneTasks() {
       const date = new Date()
       const week = date.getDay()
       const weeks = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-      let user_id = this.$store.state.users.data.id
-      let tasks = this.$store.state.tasks
-      return tasks.filter(task => task.is_done && task.week == weeks[week] && task.user_id == user_id)
+      const user = this.$store.getters.users
+      const tasks = this.$store.state.tasks
+      return tasks.filter(task => task.is_done && task.week == weeks[week] && task.user_id == user.data.id)
     }
   },
   filters: {
