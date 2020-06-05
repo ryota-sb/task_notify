@@ -95,6 +95,7 @@ export default {
       const week = date.getDay()
       const weeks = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
       const user = this.$store.getters.users
+      console.log(this.$store.getters.users)
       const tasks = this.$store.state.tasks
       return tasks.filter(task => !task.is_done && task.week == weeks[week] && task.user_id == user.data.id)
     },
