@@ -6,7 +6,7 @@
           <v-list>
             <v-list-item>
               <v-list-item-content>
-                <v-list-item-title>{{ current_user() }}</v-list-item-title>
+                <v-list-item-title></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -86,9 +86,9 @@ export default {
     'users'
   ]),
   methods: {
-    current_user() {
-      return this.$store.state.users.data.name
-    },
+    // current_user() {
+    //   return this.$store.state.users.data.name
+    // },
     signOut() {
       const params = this.$store.state.headers
       this.$store.dispatch('signOutAction', params)
