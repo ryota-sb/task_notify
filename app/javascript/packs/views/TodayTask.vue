@@ -74,37 +74,45 @@
 
 <script>
 import moment from 'moment'
+import { mapState } from 'vuex'
 
 export default {
   name: 'TodayTask',
   mounted() {
-    this.$store.dispatch('getTasksAction')
-    this.doneTasks()
-    this.notDoneTasks()
+    this.$store.dispatch('tasks/getTasksAction')
+  },
+  computed: {
+    ...mapState({
+      tasks: state => state.tasks.tasks,
+      user_id: state => state.auth.user.id
+    })
   },
   methods: {
     updateTask(task_id) {
-      this.$store.dispatch('updateTaskAction', { task_id })
-      this.$router.go({ path: this.$router.currentRoute.path, force: true })
+      this.$store.dispatch('tasks/updateTaskAction', { task_id })
     },
     deleteTask(task_id, index) {
-      this.$store.dispatch('deleteTaskAction', { task_id, index })
+      this.$store.dispatch('tasks/deleteTaskAction', { task_id, index })
     },
     doneTasks() {
       const date = new Date()
       const week = date.getDay()
       const weeks = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-      const user = this.$store.getters.user
-      const tasks = this.$store.state.tasks
-      return tasks.filter(task => !task.is_done && task.week == weeks[week] && task.user_id == user.data.id)
+      const user_id = this.user_id
+      const tasks = this.tasks
+      if(Object.keys(tasks).length) {
+        return tasks.filter(task => !task.is_done && task.week == weeks[week] && task.user_id == user_id)
+      }
     },
     notDoneTasks() {
       const date = new Date()
       const week = date.getDay()
       const weeks = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-      const user = this.$store.getters.user
-      const tasks = this.$store.state.tasks
-      return tasks.filter(task => task.is_done && task.week == weeks[week] && task.user_id == user.data.id)
+      const user_id = this.user_id
+      const tasks = this.tasks
+      if(Object.keys(tasks).length) {
+        return tasks.filter(task => task.is_done && task.week == weeks[week] && task.user_id == user_id)
+      }
     }
   },
   filters: {
