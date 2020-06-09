@@ -55,10 +55,9 @@ export default {
         password: this.password
       }
       if (this.$refs.valid_form.validate()) {
-        this.$store.dispatch('signInAction', params)
+        this.$store.dispatch('auth/signIn', params)
         this.email = ''
         this.password = ''
-        this.$router.push('/about')
       }
     }
   }

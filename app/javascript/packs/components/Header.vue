@@ -2,11 +2,11 @@
   <div>
     <v-navigation-drawer app v-model="drawer" clipped>
       <v-card flat>
-        <div v-if="headers">
+        <div v-if="Object.keys(auth).length">
           <v-list>
             <v-list-item>
               <v-list-item-content>
-                <v-list-item-title></v-list-item-title>
+                <v-list-item-title>{{ user }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -29,7 +29,8 @@
               <v-list-item-title>{{ list.name }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <div v-if="headers">
+          
+          <div v-if="Object.keys(auth).length">
             <v-list-item
               v-for="list in nav_lists_auth"
               :key='list.name'
@@ -49,7 +50,7 @@
         <div class="pa-2">
           <v-btn 
             block
-            v-if="headers"
+            v-if="Object.keys(auth).length"
             @click="signOut"
           >
             Logout
@@ -81,18 +82,16 @@ export default {
       ]
     }
   },
-  computed: mapState([
-    'headers',
-    'users'
-  ]),
+  computed: {
+    ...mapState({
+      auth: state => state.auth.auth,
+      user: state => state.auth.user.name
+    })
+  },
   methods: {
-    // current_user() {
-    //   return this.$store.state.users.data.name
-    // },
     signOut() {
-      const params = this.$store.state.headers
-      this.$store.dispatch('signOutAction', params)
-      this.$router.push('/')
+      const params = this.auth
+      this.$store.dispatch('auth/signOut', params)
     }
   }
 }

@@ -79,36 +79,44 @@
 <script>
 import AddTask from '../../components/AddTask.vue'
 import moment from 'moment'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Wednesday',
   components: { AddTask }, 
   mounted() {
-    this.$store.dispatch('getTasksAction')
-    this.doneTasks()
-    this.notDoneTasks()
+    this.$store.dispatch('tasks/getTasksAction')
+  },
+  computed: {
+    ...mapState({
+      tasks: state => state.tasks.tasks,
+      user_id: state => state.auth.user.id
+    })
   },
   methods: {
     createTask(newTask, time) {
-      const user_id = this.$store.state.users.data.id
-      this.$store.dispatch('createTaskAction', { newTask: newTask, week: 'wednesday', time: time, user_id: user_id })
+      const user_id = this.user_id
+      this.$store.dispatch('tasks/createTaskAction', { newTask: newTask, week: 'wednesday', time: time, user_id: user_id })
     },
     updateTask(task_id) {
-      this.$store.dispatch('updateTaskAction', { task_id })
-      this.$router.go({ path: this.$router.currentRoute.path, force: true })
+      this.$store.dispatch('tasks/updateTaskAction', { task_id })
     },
     deleteTask(task_id, index) {
-      this.$store.dispatch('deleteTaskAction', { task_id, index })
+      this.$store.dispatch('tasks/deleteTaskAction', { task_id, index })
     },
     doneTasks() {
-      let task = this.$store.state.tasks
-      let user_id = this.$store.state.users.data.id
-      return task.filter(task => !task.is_done && task.week == "wednesday" && task.user_id == user_id)
+      const task = this.tasks
+      const user_id = this.user_id
+      if(Object.keys(task).length) {
+        return task.filter(task => !task.is_done && task.week == "wednesday" && task.user_id == user_id)
+      }
     },
     notDoneTasks() {
-      let task = this.$store.state.tasks
-      let user_id = this.$store.state.users.data.id
-      return task.filter(task => task.is_done && task.week == "wednesday" && task.user_id == user_id)
+      const task = this.tasks
+      const user_id = this.user_id
+      if(Object.keys(task).length) {
+        return task.filter(task => task.is_done && task.week == "wednesday" && task.user_id == user_id)
+      }
     }
   },
   filters: {

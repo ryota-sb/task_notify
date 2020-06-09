@@ -102,12 +102,10 @@ export default {
       }
       if (this.$refs.valid_form.validate()) {
         this.loading = true
-        this.$store.dispatch('signUpAction', params)
+        this.$store.dispatch('auth/signUp', params)
         this.name = ''
         this.email = ''
         this.password = ''
-        this.$router.push({ path: '/' })
-
       }
     }
   }
