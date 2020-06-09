@@ -105,17 +105,17 @@ export default {
       this.$store.dispatch('tasks/deleteTaskAction', { task_id, index })
     },
     doneTasks() {
-      const task = this.tasks
+      const tasks = this.tasks
       const user_id = this.user_id
-      if(Object.keys(task).length) {
-        return task.filter(task => !task.is_done && task.week == "monday" && task.user_id == user_id)
+      if(Object.keys(tasks).length) {
+        return tasks.filter(task => !task.is_done && task.week == "monday" && task.user_id == user_id)
       }
     },
     notDoneTasks() {
-      const task = this.tasks
+      const tasks = this.tasks
       const user_id = this.user_id
-      if(Object.keys(task).length) {
-        return task.filter(task => task.is_done && task.week == "monday" && task.user_id == user_id)
+      if(Object.keys(tasks).length) {
+        return tasks.filter(task => task.is_done && task.week == "monday" && task.user_id == user_id)
       }
     }
   },
