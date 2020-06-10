@@ -16,6 +16,7 @@ Vue.prototype.$axios = axios.create()
 Vue.prototype.$axios.interceptors.response.use(response => {
   if(response.headers['access-token']) {
     const authHeaders = pick(response.headers, ["access-token", "client", "uid", "expiry", "token-type"])
+    console.log(authHeaders)
     store.commit('auth', authHeaders)
 
     let session = cookie.get('session')

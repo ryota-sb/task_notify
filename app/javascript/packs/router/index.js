@@ -41,7 +41,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const authHeaders = store.state.auth.auth
-  if(to.matched.some(record  => record.meta.requiresAuth) && !authHeaders) {
+  if(to.matched.some(record  => record.meta.requiresAuth) && !Object.keys(authHeaders).length) {
     next({ path: '/signin', query: { redirect: to.fullPath } });
   } else {
     next();
