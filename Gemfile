@@ -17,8 +17,9 @@ gem 'dotenv-rails'
 gem 'whenever', require: false
 gem 'devise'
 gem 'devise_token_auth'
-gem 'rack-cors'
+gem 'rack-cors', require: 'rack/cors'
 gem 'omniauth'
+gem 'pry-rails'
 
 
 group :development, :test do

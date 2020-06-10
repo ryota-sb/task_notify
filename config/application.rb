@@ -21,6 +21,7 @@ module TaskNotify
       controller_specs:     false,
       request_specs:        true
     end
+
     config.api_only = true
     config.middleware.use ActionDispatch::Flash
     config.assets.initialize_on_precompile = false
@@ -30,5 +31,15 @@ module TaskNotify
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
     # production環境（lib/tasksのパスを通す）
     config.eager_load_paths += Dir["#{config.root}/lib/**/"]
+
+    config.middleware.use Rack::Cors do
+      allow do
+        origins '*'
+        resource '*',
+          headers: :any,
+          expose: ['access-token', 'expiry', 'token-type', 'uid', 'client'],
+          methods: [:get, :post, :put, :delete, :options]
+      end
+    end
   end
 end
