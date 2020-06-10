@@ -19,6 +19,17 @@
       >
         <v-row justify="center">
           <v-col cols="6">
+            <v-list>
+              <v-btn
+                block
+                outlined
+                color="purple"
+                @click="testSignIn"
+              >
+                テストログイン
+              </v-btn>
+            </v-list>
+
             <v-list
               v-for="btn in buttons"
               :key="btn.name"
@@ -47,6 +58,15 @@ export default {
         { name: '新規作成', link: '/signup', color: '#247BA0'},
         { name: 'ログイン', link: '/signin', color: '#FF7854'},
       ]
+    }
+  },
+  methods: {
+    testSignIn() {
+      const test_user = {
+        email: 'test@example.com',
+        password: 'password'
+      }
+      this.$store.dispatch('auth/signIn', test_user)
     }
   }
 }
