@@ -50,8 +50,6 @@ class LinebotController < ApplicationController
           client.reply_message(event['replyToken'], message_array)
         end
       end
-      userId = event['source']['userId']
-      p 'userId': userId
     end
     head :ok
   end

@@ -1,5 +1,4 @@
 class Api::V1::TasksController < ApplicationController
-
   def index
     tasks = Task.all.order('created_at DESC')
     render json: tasks

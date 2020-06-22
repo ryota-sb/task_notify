@@ -37,7 +37,7 @@ export const auth = {
         console.log(error)
       })
     },
-    signIn({ commit, state }, params) { 
+    signIn({ commit }, params) { 
       axios.post('/api/auth/sign_in', params).then(response => {
         const authHeaders = pick(response.headers, ["access-token", "client", "uid", "expiry", "token-type"])
         commit('user', response.data.data)
