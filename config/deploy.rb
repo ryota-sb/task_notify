@@ -62,7 +62,7 @@ namespace :deploy do
   end
 
   desc 'Config bundler'
-  task :config_bundelr do
+  task :config_bundler do
     on roles(/.*/) do
       within release_path do
         execute :bundle, :config, '--local deployment true'
