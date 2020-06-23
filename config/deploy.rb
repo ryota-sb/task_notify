@@ -28,6 +28,11 @@ set :rbenv_ruby, '2.5.5'
 # 出力するログレベル
 set :log_level, :debug
 
+# --deployment` フラグは deprecated だと言われたときの対処用
+set :bundle_flags,    '--quiet'
+set :bundle_path,     nil
+set :bundle_without,  nil
+
 namespace :deploy do
   desc 'Restart application'
   task :restart do
@@ -55,6 +60,19 @@ namespace :deploy do
       end
     end
   end
+
+  desc 'Config bundler'
+  task :config_bundelr do
+    on roles(/.*/) do
+      within release_path do
+        execute :bundle, :config, '--local deployment true'
+        execute :bundle, :config, '--local without "development test"'
+        execute :bundle, :config, "--local path #{shared_path.join('bundle')}"
+      end
+    end
+  end
+
+  before 'bundler:install', 'deploy:config_bundler'
 
   after :publishing, :restart
 
