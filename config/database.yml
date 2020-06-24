@@ -16,8 +16,7 @@ test:
 
 production:
   <<: *default
-  url: <%= ENV["DATABASE_URL"]%>
-  database: <%= ENV["DB_NAME"]%>
-  username: <%= ENV["DB_USERNAME"]%>
-  password: <%= ENV["DB_PASSWORD"]%>
+  database: task_notify_production
+  username: ryota
+  password: 
 
