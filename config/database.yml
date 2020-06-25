@@ -17,6 +17,6 @@ test:
 production:
   <<: *default
   database: task_notify_production
-  username: ryota
+  username: root
   password: 
 
