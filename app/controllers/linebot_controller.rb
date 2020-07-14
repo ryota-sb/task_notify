@@ -5,15 +5,15 @@ class LinebotController < ApplicationController
   protect_from_forgery :except => [:callback]
 
   # 渡されたweekのタスクをリストに格納
-  def week_tasks(week, user_id)
-    tasks = Task.select(:content, :notification_time).order(:notification_time).where(is_done: false, week: week, user_id: user_id)
+  def week_tasks(week)
+    tasks = Task.select(:content, :notification_time).order(:notification_time).where(is_done: false, week: week)
     task_lists = tasks.map { |task| "スタート#{task.notification_time.strftime('%H:%M')} / #{task.content}" }
     return task_lists
   end
 
   # 完了タスクを未完了にする(リセット)
-  def reset_tasks(week, user_id)
-    tasks = Task.where(is_done: true, week: week, user_id: user_id)
+  def reset_tasks(week)
+    tasks = Task.where(is_done: true, week: week)
     tasks.update_all(is_done: false)
     return '今日のタスクをリセットしました。明日も頑張りましょう！'
   end

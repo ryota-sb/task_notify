@@ -31,6 +31,7 @@ end
 
 group :development do
   gem 'web-console', '>= 3.3.0'
+  gem 'foreman'
 end
 
 group :test do
@@ -39,8 +40,8 @@ group :test do
   gem 'webdrivers'
 end
 
-group :production, :staging do
-  gem 'unicorn', '5.4.1'
-end
+# group :production, :staging do
+#   gem 'unicorn', '5.4.1'
+# end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
