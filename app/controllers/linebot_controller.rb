@@ -4,13 +4,6 @@ class LinebotController < ApplicationController
 
   protect_from_forgery :except => [:callback]
 
-  # 渡されたweekのタスクをリストに格納
-  def week_tasks(week)
-    tasks = Task.select(:content, :notification_time).order(:notification_time).where(is_done: false, week: week)
-    task_lists = tasks.map { |task| "スタート#{task.notification_time.strftime('%H:%M')} / #{task.content}" }
-    return task_lists
-  end
-
   # 完了タスクを未完了にする(リセット)
   def reset_tasks(week)
     tasks = Task.where(is_done: true, week: week)
@@ -32,8 +25,6 @@ class LinebotController < ApplicationController
     events.each do |event|
       reply_text_lists = []
       case event.message['text']
-      when '今日のタスク'
-        reply_text_lists.concat(week_tasks(get_day_of_the_week))
       when 'リセット'
         reply_text_lists.push(reset_tasks(get_day_of_the_week))
       else
@@ -55,6 +46,8 @@ class LinebotController < ApplicationController
   end
 
   private
+
+  # Lineのアカウント取得
   def client
     @client ||= Line::Bot::Client.new { |config|
       config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
