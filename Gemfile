@@ -18,7 +18,6 @@ gem 'whenever', require: false
 gem 'devise'
 gem 'devise_token_auth'
 gem 'rack-cors', require: 'rack/cors'
-gem 'omniauth'
 gem 'pry-rails'
 
 
@@ -31,7 +30,6 @@ end
 
 group :development do
   gem 'web-console', '>= 3.3.0'
-  gem 'foreman'
 end
 
 group :test do
