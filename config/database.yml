@@ -15,7 +15,9 @@ test:
   database: task_notify_test
 
 production:
-  <<: *default
+  adapter: mysql2
+  encofing: utf8
+  pool: <%= ENV["RAILS_MAX_THREADS"] { 5 } %>
   database: <%= ENV["RDS_DB_NAME"] %>
   username: <%= ENV["RDS_USERNAME"] %>
   password: <%= ENV["RDS_PASSWORD"] %>
