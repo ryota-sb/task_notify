@@ -16,8 +16,7 @@ test:
 
 production:
   <<: *default
-  reconnect: false
   database: task_notify_production
-  username: task_notify
-  password: ziziiyouti
-  host: task-notify-mysql.cjaf0vjqgxuf.ap-northeast-1.rds.amazonaws.com
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
+  host: <%= ENV['RDS_HOSTNAME'] %>
